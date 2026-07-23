@@ -1,0 +1,212 @@
+import { Account, Project, MigrationLog } from '../types';
+
+export const INITIAL_ACCOUNTS: Account[] = [
+  {
+    id: 'acc-1',
+    email: 'juliocesar.dev1@gmail.com',
+    githubUsername: 'julio-dev-main',
+    aiProvider: 'Google AI Studio / Gemini',
+    tokenStatus: 'exhausted',
+    tokenPercentage: 0,
+    usedTokens: 1000000,
+    maxTokens: 1000000,
+    resetDate: new Date(Date.now() + 1000 * 60 * 60 * 18).toISOString(), // resets in 18 hours
+    notes: 'Conta principal de desenvolvimento. Limite diario atingido.',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+  },
+  {
+    id: 'acc-2',
+    email: 'juliocesar.ia2@gmail.com',
+    githubUsername: 'julio-ai-secondary',
+    aiProvider: 'Google AI Studio / Gemini',
+    tokenStatus: 'available',
+    tokenPercentage: 85,
+    usedTokens: 150000,
+    maxTokens: 1000000,
+    resetDate: new Date(Date.now() + 1000 * 60 * 60 * 42).toISOString(),
+    notes: 'Conta secundaria com cota disponivel para continuar projetos.',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 20).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString(),
+  },
+  {
+    id: 'acc-3',
+    email: 'juliocesar.pro3@gmail.com',
+    githubUsername: 'julio-pro-code',
+    aiProvider: 'Cursor / Claude',
+    tokenStatus: 'low',
+    tokenPercentage: 20,
+    usedTokens: 800000,
+    maxTokens: 1000000,
+    resetDate: new Date(Date.now() + 1000 * 60 * 60 * 5).toISOString(), // resets in 5 hours
+    notes: 'Restam poucos tokens nesta conta. Renovacao hoje a noite.',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+  },
+  {
+    id: 'acc-4',
+    email: 'juliocesar.backup4@gmail.com',
+    githubUsername: 'julio-backup-lab',
+    aiProvider: 'ChatGPT / OpenAI',
+    tokenStatus: 'available',
+    tokenPercentage: 100,
+    usedTokens: 0,
+    maxTokens: 500000,
+    resetDate: new Date(Date.now() + 1000 * 60 * 60 * 72).toISOString(),
+    notes: 'Conta reserva para emergencias quando todas as outras acabarem.',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'acc-5',
+    email: 'juliocesar.deepseek@gmail.com',
+    githubUsername: 'julio-deepseek-dev',
+    aiProvider: 'DeepSeek AI (Custom)',
+    tokenStatus: 'available',
+    tokenPercentage: 90,
+    usedTokens: 100000,
+    maxTokens: 1000000,
+    resetDate: new Date(Date.now() + 1000 * 60 * 60 * 96).toISOString(),
+    notes: 'Plataforma alternativa DeepSeek R1 para desenvolvimento avançado.',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
+];
+
+export const INITIAL_PROJECTS: Project[] = [
+  {
+    id: 'proj-1',
+    name: 'SaaS Dashboard Analytics',
+    repoUrl: 'https://github.com/julio-ai-secondary/saas-dashboard',
+    description: 'Painel completo de métricas e gráficos usando React e Tailwind.',
+    currentAccountId: 'acc-2', // Migrated from acc-1 to acc-2
+    currentBranch: 'feature/v2.1-migration-gemini',
+    currentVersion: 'v2.1.0',
+    status: 'active',
+    lastMigratedAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 15).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
+    accountVersions: [
+      {
+        id: 'ver-1',
+        accountId: 'acc-1',
+        branch: 'feature/v2.0-old',
+        version: 'v2.0.0',
+        assignedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
+        status: 'exhausted',
+        notes: 'Versão inicial desenvolvida na conta principal.',
+      },
+      {
+        id: 'ver-2',
+        accountId: 'acc-2',
+        branch: 'feature/v2.1-migration-gemini',
+        version: 'v2.1.0',
+        assignedAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
+        status: 'active',
+        notes: 'Versão atual em uso na conta secundaria com Gemini.',
+      },
+      {
+        id: 'ver-3',
+        accountId: 'acc-5',
+        branch: 'experimental/v2.2-deepseek',
+        version: 'v2.2.0-beta',
+        assignedAt: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString(),
+        status: 'archived',
+        notes: 'Versão de testes com modelo DeepSeek R1.',
+      }
+    ],
+  },
+  {
+    id: 'proj-2',
+    name: 'E-commerce API & Bot',
+    repoUrl: 'https://github.com/julio-pro-code/ecommerce-bot',
+    description: 'Integração de atendimento inteligente para loja virtual.',
+    currentAccountId: 'acc-3',
+    currentBranch: 'main',
+    currentVersion: 'v1.4.2',
+    status: 'active',
+    lastMigratedAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
+    accountVersions: [
+      {
+        id: 'ver-201',
+        accountId: 'acc-1',
+        branch: 'dev',
+        version: 'v1.3.0',
+        assignedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
+        status: 'exhausted',
+      },
+      {
+        id: 'ver-202',
+        accountId: 'acc-3',
+        branch: 'main',
+        version: 'v1.4.2',
+        assignedAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+        status: 'active',
+      }
+    ],
+  },
+  {
+    id: 'proj-3',
+    name: 'App Mobile React Native',
+    repoUrl: 'https://github.com/julio-backup-lab/mobile-fitness',
+    description: 'Aplicativo mobile de acompanhamento de rotina.',
+    currentAccountId: 'acc-4',
+    currentBranch: 'dev-v1.0',
+    currentVersion: 'v1.0.0-alpha',
+    status: 'active',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    accountVersions: [
+      {
+        id: 'ver-301',
+        accountId: 'acc-4',
+        branch: 'dev-v1.0',
+        version: 'v1.0.0-alpha',
+        assignedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+        status: 'active',
+      }
+    ],
+  }
+];
+
+
+export const INITIAL_MIGRATION_LOGS: MigrationLog[] = [
+  {
+    id: 'log-1',
+    projectId: 'proj-1',
+    projectName: 'SaaS Dashboard Analytics',
+    fromAccountId: 'acc-1',
+    fromAccountEmail: 'juliocesar.dev1@gmail.com',
+    fromGithubUsername: 'julio-dev-main',
+    toAccountId: 'acc-2',
+    toAccountEmail: 'juliocesar.ia2@gmail.com',
+    toGithubUsername: 'julio-ai-secondary',
+    fromBranch: 'feature/v2.0-old',
+    toBranch: 'feature/v2.1-migration-gemini',
+    fromVersion: 'v2.0.0',
+    toVersion: 'v2.1.0',
+    reason: 'Tokens esgotados na conta juliocesar.dev1. Código baixado em ZIP e sincronizado no novo repositório GitHub.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
+    markPreviousExhausted: true
+  },
+  {
+    id: 'log-2',
+    projectId: 'proj-2',
+    projectName: 'E-commerce API & Bot',
+    fromAccountId: 'acc-1',
+    fromAccountEmail: 'juliocesar.dev1@gmail.com',
+    fromGithubUsername: 'julio-dev-main',
+    toAccountId: 'acc-3',
+    toAccountEmail: 'juliocesar.pro3@gmail.com',
+    toGithubUsername: 'julio-pro-code',
+    fromBranch: 'dev',
+    toBranch: 'main',
+    fromVersion: 'v1.3.0',
+    toVersion: 'v1.4.2',
+    reason: 'Migração de conta devido a limite atingido no AI Studio.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    markPreviousExhausted: true
+  }
+];

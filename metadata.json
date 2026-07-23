@@ -1,0 +1,6 @@
+{
+  "name": "Gestor de Contas e Tokens IA",
+  "description": "Gerenciamento simples de contas GitHub, saldo de tokens de IA, projetos, branches e migrações.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
